@@ -16,12 +16,12 @@ office_plan <- drake_plan(
       imdb_rating)),
   office_info = target(
     schrute::theoffice %>%
-    mutate(
-      season = as.numeric(season),
-      episode = as.numeric(episode),
-      episode_name = str_to_lower(episode_name),
-      episode_name = str_remove_all(episode_name, remove_regex),
-      episode_name = str_trim(episode_name)) %>%
+      mutate(
+        season = as.numeric(season),
+        episode = as.numeric(episode),
+        episode_name = str_to_lower(episode_name),
+        episode_name = str_remove_all(episode_name, remove_regex),
+        episode_name = str_trim(episode_name)) %>%
     select(
       season, episode, episode_name,
       director, writer, character)),
@@ -90,7 +90,9 @@ office_plan <- drake_plan(
   tune_spec = target(
     linear_reg(penalty = tune(), mixture = 1) %>%
       set_engine("glmnet")),
-  lambda_grid = target(grid_regular(penalty(), levels = 10)),
+  lambda_grid = target(grid_regular(penalty(), levels = 50)),
+  # alpha_lambda_grid = target(
+  #   grid_regular(penalty(), mixture(), levels = 50)),
   lasso_grid = target(
     tune_grid(
       wf %>% add_model(tune_spec),
@@ -133,3 +135,6 @@ office_plan <- drake_plan(
 
 make(office_plan)
   
+viz <- vis_drake_graph(office_plan)
+htmlwidgets::saveWidget(viz,
+  file = here::here("extra/office_plan.html"))
