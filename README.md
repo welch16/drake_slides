@@ -1,2 +1,3 @@
-# drake_slides
-slides for group meeting about using drake
+# Reproducible Research with drake
+
+As scientists we want our research to be reproducible, but as time passes and data projects grow this becomes more difficult. Data analysis is slow and a round of scientific computations may take several minutes, hours or even days, which makes cumbersome to reprocess the complete analysis multiple times. Furthermore, when we need to reprocess some parts of the analysis, we either create a new script or modify an older one, hindering the ability to track the correspondence between results and analysis. I will speak about drake, an R oriented workflow management tool that guarantees data analysis to be reproducible, and facilitates the management of large data projects. With a simple example, I will show how to get started on using drake
